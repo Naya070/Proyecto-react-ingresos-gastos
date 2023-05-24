@@ -1,15 +1,15 @@
 import { useGlobalState } from "../context/GlobalState";
 
-function Balance() {
-    const data = useGlobalState();
-    return (
-        <div>
-            <h1>Balance</h1>
-            <div>
-                {JSON.stringify(data)}
-            </div>
-        </div>
-    )
-}
+export function Balance() {
+    const { transactions } = useGlobalState();
 
-export default Balance
+    const amounts = transactions.map((transaction) => transaction.amount);
+    const total = amounts.reduce((acc, item) => (acc += item), 0).toFixed(2);
+
+    return (
+        <div className="flex justify-between items-center my-2">
+            <h4 className="text-white">Your Balance</h4>
+            <h1 className="text-2xl font-bold">${total}</h1>
+        </div>
+    );
+}
